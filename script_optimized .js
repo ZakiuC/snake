@@ -18,57 +18,51 @@ class SnakeGame {
     constructor(gameArea, settings) {
         this.gameArea = gameArea;
         this.settings = settings;
+        this.resetGameState();
+        this.initGameBoard();
+    }
+
+    // 重置或初始化游戏状态
+    resetGameState() {
         this.gameState = GameState.START;
         this.snake = [];
         this.fruit = { x: -1, y: -1 };
-        this.fruitAdd = this.settings.fruitAdd; //
         this.currentDirection = Direction.STOP;
         this.nextDirection = Direction.STOP;
-        this.isAccelerating = false; // 跟踪是否加速
-        this.accelerationFactor = 2; // 定义加速因子，比如加速时速度是普通的2倍
-        this.baseUpdateInterval = this.settings.updateInterval;  // 保存基本间隔
-        this.timeRemaining = this.settings.timer; // 初始计时器时间
-        this.timerDelta = 0; // 定义计时器delta变量，用于追踪更新时间间隔
-        this.acceleratedCellsMoved = 0; // 在加速模式下移动的格数计数器
-        this.consumed = this.settings.consumed; // 达到减少蛇长度的移动格数阈值
-        this.reward = this.settings.reward;
-        this.rewardPlus = this.settings.rewardPlus;
-        this.rewardTime = this.settings.rewardTime;
+        this.isAccelerating = false;
+        this.accelerationFactor = 2;
         this.score = 0;
-        this.lastFrameTimeMs = 0; // 上次帧更新的时间戳
-        this.maxFPS = 60; // 最大帧率限制
-        this.delta = 0; // 定义delta变量，用于追踪更新时间间隔
+        this.lastFrameTimeMs = 0;
+        this.maxFPS = 60;
+        this.delta = 0;
+        this.baseUpdateInterval = this.settings.updateInterval;
+        this.timeRemaining = this.settings.timer;
+        this.timerDelta = 0;
+        this.acceleratedCellsMoved = 0;
     }
 
     // 初始化游戏棋盘
     initGameBoard() {
-        const existingGameOverText = document.getElementById('gameOver');
-        if (existingGameOverText) {
-            existingGameOverText.remove(); // 如果存在游戏结束文字，先移除
-        }
-
         this.gameArea.innerHTML = '';
         const fragment = document.createDocumentFragment();
         for (let i = 0; i < this.settings.gridSize; i++) {
             for (let j = 0; j < this.settings.gridSize; j++) {
                 const cell = document.createElement('div');
                 cell.classList.add('cell');
-                cell.setAttribute('data-row', i);
-                cell.setAttribute('data-col', j);
+                cell.dataset.row = i;
+                cell.dataset.col = j;
                 fragment.appendChild(cell);
             }
         }
         this.gameArea.appendChild(fragment);
-
-        // 设置计时器显示初始值
-        this.timeRemaining = this.settings.timer;
-        document.getElementById('time').textContent = `${this.timeRemaining}s`;
-
-        // 初始化分数
-        this.score = 0;
-        document.getElementById('score').textContent = `${this.score}`;
+        this.updateHUD();
     }
 
+    updateHUD() {
+        document.getElementById('time').textContent = `${this.timeRemaining}s`;
+        document.getElementById('score').textContent = `${this.score}`;
+    }
+    
     // 获取随机位置的辅助函数
     getRandomPosition(min, max) {
         return min + Math.floor(Math.random() * (max - min + 1));
@@ -89,17 +83,11 @@ class SnakeGame {
 
     // 生成水果的位置
     generateFruit() {
-        let availablePositions = [];
-        for (let i = 0; i < this.settings.gridSize; i++) {
-            for (let j = 0; j < this.settings.gridSize; j++) {
-                if (!this.isSnakeOnPosition(i, j)) {
-                    availablePositions.push({ x: j, y: i });
-                }
-            }
-        }
-        if (availablePositions.length > 0) {
-            let randomPos = availablePositions[Math.floor(Math.random() * availablePositions.length)];
-            this.fruit = randomPos;
+        const availablePositions = Array.from({length: this.settings.gridSize}, (_, i) => i)
+            .flatMap(x => Array.from({length: this.settings.gridSize}, (_, y) => ({x, y})))
+            .filter(pos => !this.isSnakeOnPosition(pos.x, pos.y));
+        if (availablePositions.length) {
+            this.fruit = availablePositions[Math.floor(Math.random() * availablePositions.length)];
             this.changeCellStyle(this.fruit, "green");
         }
     }
@@ -195,7 +183,7 @@ class SnakeGame {
         if (newHead.x === this.fruit.x && newHead.y === this.fruit.y) {
             this.snake.unshift(newHead);
             for (let i = 0; i < this.fruitAdd - 1; i++) {
-                this.snake.unshift({ x: newHead.x, y: newHead.y });
+                this.snake.unshift({ x: tail.x, y: tail.y });
             }
 
             // 加分
@@ -301,6 +289,7 @@ class SnakeGame {
 
     startGame() {
         if (this.gameState !== GameState.IN_PROGRESS) {
+            this.resetGameState();
             this.initGameBoard();
             this.delta = 0; // 从0开始累计间隔时间
 
