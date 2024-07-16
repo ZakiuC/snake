@@ -59,6 +59,10 @@ class SnakeGame {
         // 设置计时器显示初始值
         this.timeRemaining = this.settings.timer;
         document.getElementById('time').textContent = `${this.timeRemaining}s`;
+
+        // 初始化分数
+        this.score = 0;
+        document.getElementById('score').textContent = `${this.score}`;
     }
 
     // 获取随机位置的辅助函数
@@ -200,13 +204,12 @@ class SnakeGame {
     endGame() {
         clearInterval(this.gameInterval);
         this.gameInterval = null;
-        this.currentInterval = null;
-        this.score = 0;
+        this.currentInterval = null;   
         this.currentDirection = Direction.STOP;
         this.nextDirection = Direction.STOP;
         this.gameArea.innerHTML = '<div id="gameOver">Game Over</div>';
         document.getElementById('time').textContent = (this.settings.timer.toString() + 's'); // 重置计时器
-        document.getElementById('score').textContent = `${this.score}`; // 重置分数
+        document.getElementById('score').textContent = `${this.score}`;
         this.gameState = GameState.ENDED;
         console.log('Game over');
     }
