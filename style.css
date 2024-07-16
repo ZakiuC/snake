@@ -76,13 +76,20 @@ button {
 
 #gameOver {
     position: absolute;
-    top: 50%;
-    left: 50%;
-    transform: translate(-50%, -50%);
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
     color: #7A2CBF;
     font-size: min(5vw, 5vh);
     text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
 }
+
 
 .score-board {
     color: white; /* 设置分数文字颜色为白色 */

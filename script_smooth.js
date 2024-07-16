@@ -28,10 +28,12 @@ class SnakeGame {
         this.accelerationFactor = 2; // 定义加速因子，比如加速时速度是普通的2倍
         this.baseUpdateInterval = this.settings.updateInterval;  // 保存基本间隔
         this.timeRemaining = this.settings.timer; // 初始计时器时间
+        this.timerDelta = 0; // 定义计时器delta变量，用于追踪更新时间间隔
         this.acceleratedCellsMoved = 0; // 在加速模式下移动的格数计数器
         this.consumed = this.settings.consumed; // 达到减少蛇长度的移动格数阈值
         this.reward = this.settings.reward;
         this.rewardPlus = this.settings.rewardPlus;
+        this.rewardTime = this.settings.rewardTime;
         this.score = 0;
         this.lastFrameTimeMs = 0; // 上次帧更新的时间戳
         this.maxFPS = 60; // 最大帧率限制
@@ -118,10 +120,6 @@ class SnakeGame {
 
         // 计算新的蛇头位置
         let newHead = { x: this.snake[0].x + this.currentDirection.x, y: this.snake[0].y + this.currentDirection.y };
-        
-        // 更新倒计时
-        this.timeRemaining -= this.settings.updateInterval / 1000;
-        document.getElementById('time').textContent = `${Math.max(0, Math.round(this.timeRemaining))}s`;
 
         if (this.isAccelerating) {
             this.acceleratedCellsMoved++;
@@ -152,6 +150,7 @@ class SnakeGame {
             return;
         }
         this.delta += timestamp - this.lastFrameTimeMs;
+        this.timerDelta += timestamp - this.lastFrameTimeMs;
         this.lastFrameTimeMs = timestamp;
 
         // 控制实际的更新间隔
@@ -164,7 +163,20 @@ class SnakeGame {
             this.delta -= interval;
         }
         
+        // 独立更新倒计时，不受加速影响
+        this.updateTimer();
+    
         requestAnimationFrame(this.gameLoop.bind(this));
+    }
+
+    // 更新游戏计时器
+    updateTimer() {
+        // 累积时间达到或超过1秒时减少时间
+        if (this.timerDelta >= 1000) {
+            this.timeRemaining -= 1;
+            this.timerDelta -= 1000;  // 减去1000毫秒，保留多余的累积时间
+            document.getElementById('time').textContent = `${Math.max(0, Math.round(this.timeRemaining))}s`;
+        }
     }
 
     // 碰撞检查
@@ -195,6 +207,10 @@ class SnakeGame {
             }else{
                 this.score += this.reward;
             }
+
+            // 加时
+            this.timeRemaining += this.rewardTime;
+        
             document.getElementById('score').textContent = `${this.score}`;
             this.generateFruit();
         } else {
@@ -230,11 +246,23 @@ class SnakeGame {
 
     // 结束游戏
     endGame(reason) {
+        if(this.gameState === GameState.ENDED)
+        {
+            return;
+        }
         this.isAccelerating = false;
         this.currentDirection = Direction.STOP;
         this.nextDirection = Direction.STOP;
-        // this.gameArea.innerHTML = '<div id="gameOver">Game Over</div>';
         this.gameState = GameState.ENDED;
+
+        // 创建一个覆盖层显示 Game Over
+        const gameOverOverlay = document.createElement('div');
+        gameOverOverlay.id = 'gameOver';  // 设置 ID 以应用 CSS 样式
+        gameOverOverlay.textContent = 'Game Over';
+        
+        this.gameArea.style.position = 'relative';  // 确保游戏区域可以定位覆盖层
+        this.gameArea.appendChild(gameOverOverlay);
+
         // 输出游戏结束的原因和蛇的数据
         console.log(`Game Over due to ${reason}`);
         console.log(`Snake length: ${this.snake.length}`);
@@ -318,6 +346,7 @@ const settings = {
     fruitAdd: 5,     // 吃到一个果子+fruitAdd蛇身
     reward: 1,
     rewardPlus: 2,
+    rewardTime: 5,
 };
 const snakeGame = new SnakeGame(gameArea, settings);
 
