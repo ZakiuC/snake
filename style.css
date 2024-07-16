@@ -1,0 +1,95 @@
+body {
+    display: flex;
+    /* 设置flex布局使子元素水平垂直居中 */
+    flex-direction: column;
+    /* 垂直方向布局 */
+    justify-content: center;
+    /* 水平居中 */
+    align-items: center;
+    /* 垂直居中 */
+    height: 100vh;
+    /* 高度设置为视窗的100%，确保整个页面充满整个屏幕高度 */
+    margin: 0; /* 移除默认的边距 */    
+    background-color: #7A2CBF;
+    /* 设置背景颜色为黄色 */
+}
+
+#gameArea {
+    width: 500px;
+    /* 游戏区域宽度为500像素 */
+    height: 500px;
+    /* 游戏区域高度为500像素 */
+    background-color: #302b63;
+    /* 背景色设为白色 */
+    display: grid;
+    /* 使用网格布局 */
+    grid-template-columns: repeat(25, 20px);
+    /* 将网格分成25列，每列宽度20像素 */    
+    grid-template-rows: repeat(25, 20px);
+    /* 将网格分成25行，每行高度20像素 */
+    border: 5px solid #302b63;
+    /* 边框为黑色，厚度为2像素 */
+    position: relative;  /* 确保已经设置为 relative */
+}
+
+.cell {
+    background-color: #b1a2c7;
+    /* 单元格背景颜色为浅灰色 */
+    border: 1px solid #302b63;
+    /* 单元格边框为灰色，厚度为1像素 */
+}
+
+.snake {
+    background-color: black;
+    /* 蛇的颜色为黑色 */
+}
+
+.food {
+    background-color: red;
+    /* 食物的颜色为红色 */
+}
+
+.controls {
+    display: flex;
+    /* 设置flex布局来排列控制按钮 */
+    justify-content: space-around;
+    /* 控制按钮平均分布在容器中 */
+    width: 100%;
+    /* 控制区域宽度为100% */
+    margin-top: 20px;
+    /* 顶部外边距为20像素 */
+    align-items: center;
+    /* 控制区域垂直居中 */
+}
+
+.timer{
+    color: white;
+}
+
+button {
+    padding: 10px 20px;
+    /* 按钮内边距，上下10像素，左右20像素 */
+    background-color: #6330af;
+    color: white;
+}
+
+#gameOver {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    color: #7A2CBF;
+    font-size: min(5vw, 5vh);
+    text-align: center;
+}
+
+.score-board {
+    color: white; /* 设置分数文字颜色为白色 */
+    font-size: 24px; /* 设置字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    margin-bottom: 10px; /* 设置与游戏区域之间的间距 */
+}
+
+#score {
+    color: #DAA520; /* 设置分数数字的颜色为金色 */
+}

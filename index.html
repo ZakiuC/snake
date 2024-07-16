@@ -1,0 +1,41 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snake</title>
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <div class="score-board">分数: <span id="score">0</span></div>
+    <div id="gameArea"></div>
+    <div class="controls">
+        <button id="startButton">Start</button>
+        <div class="timer">时间: <span id="time">0s</span></div>
+        <button id="endButton">End</button>
+    </div>
+    <script src="script.js"></script>
+    <script>
+        const startButton = document.getElementById('startButton');
+        const endButton = document.getElementById('endButton');
+        const timeSpan = document.getElementById('time');
+        const scoreSpan = document.getElementById('score');
+
+        // 绑定开始按钮的点击事件，开始游戏
+        startButton.addEventListener('click', () => {
+            snakeGame.startGame();
+            scoreSpan.textContent = '0'; // 游戏开始时分数重置为0
+        });
+
+        // 绑定结束按钮的点击事件，结束游戏
+        endButton.addEventListener('click', () => {
+            snakeGame.endGame();
+        });
+
+        timeSpan.textContent = snakeGame.settings.timer + 's';
+        scoreSpan.textContent = snakeGame.score;
+    </script>
+</body>
+
+</html>
