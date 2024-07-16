@@ -212,9 +212,9 @@ class SnakeGame {
         });
         this.snake.forEach((segment, index) => {
             // 对蛇的头部应用较大的缩放
-            this.changeCellStyle(segment, index === 0 ? "#7A2CBF" : "#a357e6", 1.3);
+            this.changeCellStyle(segment, index === 0 ? "#7A2CBF" : "#a357e6", 1.15);
         });
-        this.changeCellStyle(this.fruit, "green", 1.3);
+        this.changeCellStyle(this.fruit, "green", 1.15);
     }
 
     // 改变特定单元格样式
