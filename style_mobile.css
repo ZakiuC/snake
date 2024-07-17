@@ -1,0 +1,207 @@
+body {
+    display: flex;
+    /* 设置flex布局使子元素水平垂直居中 */
+    flex-direction: column;
+    /* 垂直方向布局 */
+    justify-content: flex-start; 
+    /* 从顶部开始布局 */
+    align-items: center;
+    /* 垂直居中 */
+    height: 100vh;
+    /* 高度设置为视窗的100%，确保整个页面充满整个屏幕高度 */
+    margin: 0; /* 移除默认的边距 */    
+    background-color: #7A2CBF;
+    /* 设置背景颜色为黄色 */
+    padding-top: 5vh; /* 增加顶部内边距以避免内容过于顶端 */
+}
+
+#gameArea {
+    width: 80vw;
+    /* 游戏区域宽度为500像素 */
+    height: 80vw;
+    /* 游戏区域高度为500像素 */
+    background-color: #302b63;
+    /* 背景色设为白色 */
+    display: grid;
+    /* 使用网格布局 */
+    grid-template-columns: repeat(25, 3.2vw);
+    /* 将网格分成25列，每列宽度20像素 */    
+    grid-template-rows: repeat(25, 3.2vw);
+    /* 将网格分成25行，每行高度20像素 */
+    border: 1vw solid #302b63;
+    /* 边框为黑色，厚度为2像素 */
+    position: relative;  /* 确保已经设置为 relative */
+}
+
+.controls {
+    position: relative;
+    width: 80vw; /* 容器宽度适当调整 */
+    height: 50%; /* 容器高度适当调整 */
+    margin: 20px auto; /* 水平居中 */
+}
+
+.dpad {
+    position: absolute;  /* 使用绝对定位 */
+    width: 50vw;  /* 根据需要调整大小 */
+    height: 50vw; /* 根据需要调整大小 */
+    left: 5vw;
+    bottom: 10vw;
+}
+
+.dpad-button {
+    position: absolute;
+    border: none;
+    justify-content: center;
+    transform-origin: center;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 1024 1024'%3E%3Cpath d='M896 768l-80.896 0-131.072 0-155.648 0-159.744 0-141.312 0-100.352 0q-24.576 0-39.936-11.264t-20.992-28.672-0.512-38.4 22.528-41.472q37.888-40.96 79.872-86.016t86.016-91.136l86.016-92.16q44.032-46.08 83.968-89.088 18.432-19.456 44.032-28.672t52.736-8.704 53.248 11.776 45.568 31.744q70.656 73.728 147.456 159.744t160.768 184.32q19.456 23.552 26.624 46.592t2.56 40.96-20.48 29.184-40.448 11.264z' fill='%236330af'%3E%3C/path%3E%3C/svg%3E");
+    width: 18vw;
+    height: 18vw;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+}
+
+#upButton {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    transform: translateX(-50%);
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#leftButton {
+    position: absolute;
+    left: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(-90deg);
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#downButton {
+    position: absolute;
+    bottom: 0;
+    left: 50%;
+    transform: translateX(-50%) rotate(180deg);
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#rightButton {
+    position: absolute;
+    right: 0;
+    top: 50%;
+    transform: translateY(-50%) rotate(90deg);
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#startButton {
+    position: absolute;
+    top: 0;
+    left: 5vw;
+    width: 18vw;
+    height: 18vw;
+    background-image: url("data:image/svg+xml,%3Csvg t%3D%221721195044936%22 class%3D%22icon%22 viewBox%3D%220 0 1024 1024%22 version%3D%221.1%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22 p-id%3D%2213457%22 width%3D%22200%22 height%3D%22200%22%3E%3Cpath d%3D%22M512 96C282.624 96 96 282.624 96 512s186.624 416 416 416 416-186.624 416-416S741.376 96 512 96z m0 768C317.92 864 160 706.08 160 512S317.92 160 512 160s352 157.92 352 352-157.92 352-352 352z%22 p-id%3D%2213458%22 fill%3D%22%236330af%22%3E%3C/path%3E%3Cpath d%3D%22M466.816 324.96a32 32 0 0 0-50.816 25.888v339.776a32 32 0 0 0 50.816 25.856l233.6-169.888a32 32 0 0 0 0-51.776l-233.6-169.856z%22 p-id%3D%2213459%22 fill%3D%22%236330af%22%3E%3C/path%3E%3C/svg%3E");
+    border: none;
+    justify-content: center;
+    transform-origin: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#endButton {
+    position: absolute;
+    right: 5vw;
+    top: 0;
+    width: 18vw;
+    height: 18vw;
+    background-image: url("data:image/svg+xml,%3Csvg t%3D%221721195304004%22 class%3D%22icon%22 viewBox%3D%220 0 1024 1024%22 version%3D%221.1%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22 p-id%3D%2214476%22 width%3D%22200%22 height%3D%22200%22%3E%3Cpath d%3D%22M512 128a382.6 382.6 0 1 1-149.45 30.15A381.54 381.54 0 0 1 512 128m0-64C264.58 64 64 264.58 64 512s200.58 448 448 448 448-200.58 448-448S759.42 64 512 64z%22 p-id%3D%2214477%22 fill%3D%22%236330af%22%3E%3C/path%3E%3Cpath d%3D%22M320 320l384 0 0 384-384 0 0-384Z%22 p-id%3D%2214478%22 fill%3D%22%236330af%22%3E%3C/path%3E%3C/svg%3E");
+    border: none;
+    justify-content: center;
+    transform-origin: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    filter: drop-shadow(0 0 0.3vw #302b63);
+}
+
+#speedButton {
+    position: absolute;
+    right: 5vw;
+    bottom: 25vw;
+    width: 32vw;
+    height: 16vw;
+    background-image: url("data:image/svg+xml,%3Csvg t%3D%221721195483381%22 class%3D%22icon%22 viewBox%3D%220 0 1024 1024%22 version%3D%221.1%22 xmlns%3D%22http%3A//www.w3.org/2000/svg%22 p-id%3D%2216692%22 width%3D%22128%22 height%3D%22128%22%3E%3Cpath d%3D%22M317.637215 1024a54.613333 54.613333 0 0 1-27.306667-7.585185 53.601975 53.601975 0 0 1-24.778271-60.681482l104.675555-384.316049-163.334321-3.034074a65.738272 65.738272 0 0 1-54.107654-28.318025 63.715556 63.715556 0 0 1-6.573827-60.175802l166.874074-423.759013A87.482469 87.482469 0 0 1 394.500425 0h279.134815a77.874568 77.874568 0 0 1 64.726913 34.386173 77.874568 77.874568 0 0 1 10.11358 72.817778L638.743388 389.37284l4.551111 6.573827h179.01037a60.175802 60.175802 0 0 1 55.624691 36.914568 60.681481 60.681481 0 0 1-13.147654 65.738271L355.563141 1007.818272a53.601975 53.601975 0 0 1-37.925926 16.181728zM222.56956 492.531358h145.129877a78.885926 78.885926 0 0 1 75.851852 101.135802l-82.931358 303.407408 423.759012-423.759012H643.294499a80.908642 80.908642 0 0 1-74.840494-111.249383l108.720988-282.168889L394.500425 75.851852a11.630617 11.630617 0 0 0-11.630618 8.090864z%22 fill%3D%22%236330af%22 p-id%3D%2216693%22%3E%3C/path%3E%3C/svg%3E");
+    border: 0.3vw solid #302b63;
+    border-radius: 2vw;
+    justify-content: center;
+    transform-origin: center;
+    background-color: transparent;
+    background-repeat: no-repeat;
+    background-position: center;
+    background-color: #551bab;
+}
+
+button {
+    padding: 2.5vw 5vw;
+    background-color: #6330af;
+    color: white;
+    margin: 5px; /* 增加按键间距 */
+    font-size: 3vw;;
+}
+
+.cell {
+    background-color: #b1a2c7;
+    /* 单元格背景颜色为浅灰色 */
+    border: 0.4vw solid #302b63;
+    /* 单元格边框为灰色，厚度为1像素 */
+    border-radius: 0.64vw; /* 这里设置圆角的大小 */
+}
+
+.controls {
+    display: flex;
+    /* 设置flex布局来排列控制按钮 */
+    justify-content: space-around;
+    /* 控制按钮平均分布在容器中 */
+    width: 100%;
+    /* 控制区域宽度为100% */
+    margin-top: 20px;
+    /* 顶部外边距为20像素 */
+    align-items: center;
+    /* 控制区域垂直居中 */
+}
+
+.timer{
+    color: white;
+    margin-top: 2vw;
+    font-size: 3vw;
+}
+
+
+#gameOver {
+    position: absolute;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    color: #7A2CBF;
+    font-size: min(5vw, 5vh);
+    text-align: center;
+    background-color: rgba(0, 0, 0, 0.7);
+    z-index: 100;
+}
+
+
+.score-board {
+    color: white; /* 设置分数文字颜色为白色 */
+    font-size: 4vw; /* 设置字体大小 */
+    font-weight: bold; /* 加粗字体 */
+    margin-bottom: 2vw; /* 设置与游戏区域之间的间距 */
+}
+
+#score {
+    color: #DAA520; /* 设置分数数字的颜色为金色 */
+}

@@ -35,14 +35,9 @@ body {
 .cell {
     background-color: #b1a2c7;
     /* 单元格背景颜色为浅灰色 */
-    border: 2px solid #302b63;
+    border: 2.5px solid #302b63;
     /* 单元格边框为灰色，厚度为1像素 */
-    border-radius: 3px; /* 这里设置圆角的大小 */
-}
-
-.snake {
-    background-color: black;
-    /* 蛇的颜色为黑色 */
+    border-radius: 4px; /* 这里设置圆角的大小 */
 }
 
 .food {

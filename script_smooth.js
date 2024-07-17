@@ -292,6 +292,28 @@ class SnakeGame {
         }
     }
 
+    handleTouch(event){
+        const keyMap = {
+            'up': Direction.UP,
+            'left': Direction.LEFT,
+            'right': Direction.RIGHT,
+            'down': Direction.DOWN,
+        };
+        const newDirection = keyMap[event.toLowerCase()];
+        if (newDirection && this.canChangeDirection(newDirection)) {
+            this.nextDirection = newDirection;
+        }
+
+        if(event === 'speedUp')
+        {
+            this.isAccelerating = true;
+        }
+        if(event === 'speedNormal')
+        {
+            this.isAccelerating = false;
+        }
+    }
+
     // 处理按键释放事件
     handleKeyUp(event) {
         if (event.key === "Shift") {
@@ -309,7 +331,7 @@ class SnakeGame {
             this.initGameBoard();
             this.delta = 0; // 从0开始累计间隔时间
             this.timerDelta = 0;
-            
+
             this.randomizeSnakePosition();
 
             this.gameState = GameState.IN_PROGRESS;
@@ -348,7 +370,7 @@ const settings = {
     fruitAdd: 5,     // 吃到一个果子+fruitAdd蛇身
     reward: 1,
     rewardPlus: 2,
-    rewardTime: 3,
+    rewardTime: 2,
 };
 const snakeGame = new SnakeGame(gameArea, settings);
 

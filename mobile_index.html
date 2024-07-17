@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="zh">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Snake</title>
+    <link rel="stylesheet" href="style_mobile.css">
+</head>
+
+<body>
+    <div class="score-board">分数: <span id="score">0</span></div>
+    <div id="gameArea"></div>
+    <div class="timer">时间: <span id="time">0s</span></div>
+    <div class="controls">
+        <div class="dpad">
+            <button id="upButton" class="dpad-button"></button>
+            <button id="leftButton" class="dpad-button"></button>
+            <button id="rightButton" class="dpad-button"></button>
+            <button id="downButton" class="dpad-button"></button>
+        </div>
+        <button id="startButton"></button>
+        <button id="endButton"></button>
+        <button id="speedButton"></button>
+    </div>
+    <script src="script_smooth.js"></script>
+    <script>
+        // 检测设备类型并跳转
+        function detectDeviceAndRedirect() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /mobile|android|iphone|ipad|ipod/.test(userAgent);
+            if (!isMobile) {
+                window.location.href = 'index.html'; // 替换为pc页面的URL
+            }
+        }
+        detectDeviceAndRedirect();
+
+        const startButton = document.getElementById('startButton');
+        const endButton = document.getElementById('endButton');
+        const upButton = document.getElementById('upButton');
+        const leftButton = document.getElementById('leftButton');
+        const rightButton = document.getElementById('rightButton');
+        const downButton = document.getElementById('downButton');
+        const speedButton = document.getElementById('speedButton');
+
+        const timeSpan = document.getElementById('time');
+        const scoreSpan = document.getElementById('score');
+        
+
+        // 绑定开始按钮的点击事件，开始游戏
+        startButton.addEventListener('touchstart', () => {
+            snakeGame.startGame();
+            scoreSpan.textContent = '0'; // 游戏开始时分数重置为0
+        });
+
+        // 绑定结束按钮的点击事件，结束游戏
+        endButton.addEventListener('touchstart', () => {
+            snakeGame.endGame();
+        });
+
+        upButton.addEventListener('touchstart', () => {
+            snakeGame.handleTouch('up');
+        });
+        leftButton.addEventListener('touchstart', () => {
+            snakeGame.handleTouch('left');
+        });
+        rightButton.addEventListener('touchstart', () => {
+            snakeGame.handleTouch('right');
+        });
+        downButton.addEventListener('touchstart', () => {
+            snakeGame.handleTouch('down');
+        });
+        speedButton.addEventListener('touchstart', () => {
+            snakeGame.handleTouch('speedUp');
+        });
+        speedButton.addEventListener('touchend', () => {
+            snakeGame.handleTouch('speedNormal');
+        });
+        
+        timeSpan.textContent = snakeGame.settings.timer + 's';
+        scoreSpan.textContent = snakeGame.score;
+    </script>
+</body>
+
+</html>

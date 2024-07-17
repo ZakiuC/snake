@@ -17,6 +17,16 @@
     </div>
     <script src="script_smooth.js"></script>
     <script>
+        // 检测设备类型并跳转
+        function detectDeviceAndRedirect() {
+            const userAgent = navigator.userAgent.toLowerCase();
+            const isMobile = /mobile|android|iphone|ipad|ipod/.test(userAgent);
+            if (isMobile) {
+                window.location.href = 'mobile_index.html'; // 替换为手机页面的URL
+            }
+        }
+        detectDeviceAndRedirect();
+
         const startButton = document.getElementById('startButton');
         const endButton = document.getElementById('endButton');
         const timeSpan = document.getElementById('time');
