@@ -163,6 +163,7 @@ class SnakeGame {
             this.timeRemaining -= 1;
             this.timerDelta -= 1000;  // 减去1000毫秒，保留多余的累积时间
             document.getElementById('time').textContent = `${Math.max(0, Math.round(this.timeRemaining))}s`;
+            console.log(`Time remaining: ${this.timeRemaining}s`);
         }
     }
 
@@ -195,7 +196,8 @@ class SnakeGame {
 
             // 加时
             this.timeRemaining += this.rewardTime;
-
+            console.log(`score: ${this.score}, time: ${this.timeRemaining}s`);
+            document.getElementById('time').textContent = `${this.timeRemaining}s`;
             document.getElementById('score').textContent = `${this.score}`;
             this.generateFruit();
         } else {
@@ -331,7 +333,7 @@ const settings = {
     fruitAdd: 5,     // 吃到一个果子+fruitAdd蛇身
     reward: 1,
     rewardPlus: 2,
-    rewardTime: 5,
+    rewardTime: 3,
 };
 const snakeGame = new SnakeGame(gameArea, settings);
 

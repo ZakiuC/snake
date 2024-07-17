@@ -170,6 +170,9 @@ class SnakeGame {
 
     // 更新游戏计时器
     updateTimer() {
+        if(this.gameState != GameState.IN_PROGRESS) {
+            return;
+        }
         // 累积时间达到或超过1秒时减少时间
         if (this.timerDelta >= 1000) {
             this.timeRemaining -= 1;
@@ -194,8 +197,10 @@ class SnakeGame {
         // 检查是否吃到水果
         if (newHead.x === this.fruit.x && newHead.y === this.fruit.y) {
             this.snake.unshift(newHead);
+
+            const tail = this.snake[this.snake.length - 1];
             for (let i = 0; i < this.fruitAdd - 1; i++) {
-                this.snake.unshift({ x: newHead.x, y: newHead.y });
+                this.snake.push({ x: tail.x, y: tail.y });
             }
 
             // 加分
@@ -303,7 +308,8 @@ class SnakeGame {
         if (this.gameState !== GameState.IN_PROGRESS) {
             this.initGameBoard();
             this.delta = 0; // 从0开始累计间隔时间
-
+            this.timerDelta = 0;
+            
             this.randomizeSnakePosition();
 
             this.gameState = GameState.IN_PROGRESS;
@@ -342,7 +348,7 @@ const settings = {
     fruitAdd: 5,     // 吃到一个果子+fruitAdd蛇身
     reward: 1,
     rewardPlus: 2,
-    rewardTime: 5,
+    rewardTime: 3,
 };
 const snakeGame = new SnakeGame(gameArea, settings);
 
