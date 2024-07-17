@@ -13,6 +13,10 @@ body {
     background-color: #7A2CBF;
     /* 设置背景颜色为黄色 */
     padding-top: 5vh; /* 增加顶部内边距以避免内容过于顶端 */
+    -webkit-user-select: none; /* Safari */
+    -moz-user-select: none;    /* Firefox */
+    -ms-user-select: none;     /* IE 10+ */
+    user-select: none;         /* 标准语法 */
 }
 
 #gameArea {
